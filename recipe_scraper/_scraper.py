@@ -26,7 +26,7 @@ class Scraper:
         """Instructions on how to execute the recipe."""
         raise RecipeScraperMethodNotImplemented("instructions")
 
-    def print(self) -> dict:
+    def print(self) -> None:
         """Returns a dictionary with the recipe information."""
         data = {
             "title": self.title(),
