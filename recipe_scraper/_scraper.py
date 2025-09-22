@@ -1,5 +1,6 @@
 import json
 
+from typing import Union
 from bs4 import BeautifulSoup
 from recipe_scraper._exceptions import RecipeScraperMethodNotImplemented
 
@@ -26,8 +27,16 @@ class Scraper:
         """Instructions on how to execute the recipe."""
         raise RecipeScraperMethodNotImplemented("instructions")
 
+    def to_json(self) -> dict[str, Union[str, list[str]]]:
+        """Returns a JSON representation of the recipe."""
+        return {
+            "title": self.title(),
+            "description": self.description(),
+            "instructions": self.instructions()
+        }
+
     def print(self) -> None:
-        """Returns a dictionary with the recipe information."""
+        """Prints the recipe in JSON format."""
         data = {
             "title": self.title(),
             "description": self.description(),
