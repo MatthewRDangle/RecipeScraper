@@ -7,10 +7,6 @@ class McCormickScraper(Scraper):
     def __init__(self, html: str, url: str):
         super().__init__(html, url)
 
-    @classmethod
-    def website_name(cls) -> str:
-        return "www.mccormick.com"
-
     def title(self) -> str:
         return self.soup.find("h1").get_text()
 
