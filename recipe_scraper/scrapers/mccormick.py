@@ -1,7 +1,5 @@
 from typing import List
-
 from bs4 import PageElement, BeautifulSoup
-
 from recipe_scraper._scraper import Scraper
 
 class McCormickScraper(Scraper):
