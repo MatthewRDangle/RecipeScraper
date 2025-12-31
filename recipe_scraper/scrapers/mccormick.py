@@ -7,8 +7,16 @@ class McCormickScraper(Scraper):
     def __init__(self, html: str, url: str):
         super().__init__(html, url)
 
+    @classmethod
+    def website_name(cls) -> str:
+        return "www.mccormick.com"
+
     def title(self) -> str:
-        return self.soup.find("h1").get_text()
+        title = self.soup.find("h1")
+        try:
+            return title.get_text()
+        except AttributeError:
+            return ""
 
     def description(self) -> str:
         desc = ""
@@ -49,10 +57,11 @@ class McCormickScraper(Scraper):
         instructions = []
 
         int_el = self.soup.find("div", {"class": "ff-body fs-body-60 main-recipe__text rte rte--article"})
-        for el in int_el.findAll("li"):
-            text = el.text.strip()
-            if text:
-                instructions.append(text)
+        if int_el:
+            for el in int_el.findAll("li"):
+                text = el.text.strip()
+                if text:
+                    instructions.append(text)
 
         return instructions
 
