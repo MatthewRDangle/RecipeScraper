@@ -14,15 +14,19 @@ def verify_url(url: str) -> Tuple[str, str]:
 
     split_url: SplitResult = urllib.parse.urlsplit(url)
     extracted: ExtractResult = tldextract.extract(split_url.netloc)
-    if not extracted.suffix:
-        split_url.netloc = f"www.{split_url.netloc}"
     if not extracted.domain:
         raise InvalidScraperURL("Domain not found in URL.")
     if not extracted.suffix:
         raise InvalidScraperURL("Suffix not found in URL.")
 
     verified_url: str = urllib.parse.urlunsplit(split_url)
-    extracted_url: str = f"{extracted.subdomain}.{extracted.domain}.{extracted.suffix}"
+    extracted_url: str = ""
+    if extracted.subdomain and extracted.subdomain != "www":
+        extracted_url = f"{extracted.subdomain}.{extracted.domain}.{extracted.suffix}"
+    else:
+        extracted_url = f"{extracted.domain}.{extracted.suffix}"
+
+
     return verified_url, extracted_url
 
 def scrape(url: str, scraper: type[Scraper], err_func: Callable) -> None:
