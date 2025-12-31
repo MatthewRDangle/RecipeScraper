@@ -20,7 +20,6 @@ def verify_url(url: str) -> Tuple[str, str]:
         raise InvalidScraperURL("Suffix not found in URL.")
 
     verified_url: str = urllib.parse.urlunsplit(split_url)
-    extracted_url: str = ""
     if extracted.subdomain and extracted.subdomain != "www":
         extracted_url = f"{extracted.subdomain}.{extracted.domain}.{extracted.suffix}"
     else:
@@ -40,13 +39,13 @@ def scrape(url: str, scraper: type[Scraper], err_func: Callable) -> None:
     except requests.exceptions.HTTPError as httperr:
         print("HTTP Error", httperr.args[0])
         err = True
-    except requests.exceptions.ReadTimeout as errrt:
+    except requests.exceptions.ReadTimeout:
         print("Request timed out.")
         err = True
-    except requests.exceptions.ConnectionError as conerr:
+    except requests.exceptions.ConnectionError:
         print("Connection error")
         err = True
-    except requests.exceptions.MissingSchema as errmiss:
+    except requests.exceptions.MissingSchema:
         print("please include http or https.")
         err = True
     finally:
