@@ -1,4 +1,4 @@
-from _version import __version__
+from recipe_scraper._version import __version__
 
 class RecipeScraperMethodNotImplemented(NotImplementedError):
     """A required scraper method was not implemented."""
